@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mypusht"
+version = "0.1.0"
+description = "A MuJoCo + SO-ARM100 PushT imitation-learning benchmark."
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+license = { text = "MIT" }
+authors = [{ name = "MyPushT contributors" }]
+keywords = ["robotics", "mujoco", "imitation-learning", "pusht", "so-arm100"]
+dependencies = [
+  "numpy>=1.26",
+  "gymnasium>=0.29",
+  "mujoco>=3.1",
+  "opencv-python>=4.9",
+  "imageio[ffmpeg]>=2.34",
+  "torch>=2.2",
+  "tqdm>=4.66",
+  "lerobot>=0.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+logging = ["wandb>=0.16"]
+teleop = ["pygame>=2.5"]
+
+[project.scripts]
+mypusht-collect = "mypusht.teleop.collect:main"
+mypusht-convert = "mypusht.data.lerobot_convert:main"
+mypusht-train = "mypusht.training.cli:main"
+mypusht-eval = "mypusht.evaluation.evaluate:main"
+mypusht-aggregate = "mypusht.evaluation.aggregate:main"
+mypusht-smoke-env = "mypusht.envs.smoke:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

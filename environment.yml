@@ -1,0 +1,15 @@
+name: mypusht
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pytorch
+  - torchvision
+  - pytorch-cuda=12.1
+  - tqdm
+  - pip:
+      - -e ".[dev,logging,teleop]"

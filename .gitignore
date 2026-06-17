@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Generated experiment artifacts
+outputs/**
+wandb/
+*.log
+
+# Local learning-stage scripts kept for reference but not part of the public v1 package
+src/scripts/**
+计划.md
+
+# Large assets managed outside Git for the public repo
+assets/lerobot_dataset/**
+assets/model/**
+*.pt
+*.pth
+*.ckpt
+*.mp4
+*.npz
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

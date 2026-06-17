@@ -1,0 +1,49 @@
+<mujoco model="simple_pusht">
+    <compiler angle="radian"/>
+    <option timestep="0.001" gravity="0 0 -9.81"/>
+
+    <default>
+        <geom friction="1.0 0.005 0.0001"/>
+        <joint damping="0.2"/>
+    </default>
+
+    <worldbody>
+        <light directional="true" pos="0 0 2" dir="0 0 -1"/>
+        <geom name="floor" type="plane" size="1 1 0.05" rgba="0.8 0.8 0.8 1"/>
+
+        <!-- 教学版 pusher：同一个 body 上挂两个 slide joint，避免无质量父 body 报错 -->
+        <body name="pusher_body" pos="-0.15 0 0.035">
+            <joint name="pusher_x" type="slide" axis="1 0 0" damping="16"/>
+
+            <joint name="pusher_y" type="slide" axis="0 1 0" damping="16"/>
+
+            <geom name="pusher" type="cylinder" size="0.022 0.03" rgba="0.1 0.25 0.9 1" mass="0.8"/>
+
+            <site name="pusher_site" pos="0 0 0" size="0.01" rgba="0 0 1 1"/>
+        </body>
+
+        <!-- 被推动的 T 形物体 -->
+        <body name="T_block" pos="0.18 0 0.02">
+            <freejoint name="object_joint"/>
+            <site name="T_block_anchor" pos="0 0 0" size="0.01" rgba="0 0 0 0"/>
+            <geom name="T_top" type="box" size="0.055 0.018 0.015" pos="0 0.04 0" mass="0.05" rgba="0 0.7 0.3 1"/>
+            <geom name="T_stem" type="box" size="0.018 0.04 0.015" pos="0 -0.018 0" mass="0.05" rgba="0 0.7 0.3 1"/>
+        </body>
+
+        <!-- 目标位姿，只做视觉提示，不参与碰撞 -->
+        <body name="T_sign" pos="0.32 0.05 0.003">
+            <site name="T_sign_anchor" pos="0 0 0" size="0.01" rgba="0 0 0 0"/>
+            <geom type="box" size="0.055 0.018 0.001" pos="0 0.04 0" rgba="1 1 0 0.45" contype="0" conaffinity="0"/>
+            <geom type="box" size="0.018 0.04 0.001" pos="0 -0.018 0" rgba="1 1 0 0.45" contype="0" conaffinity="0"/>
+        </body>
+
+        <camera name="top_view" pos="0 0 1"/>
+        <camera name="side_view" pos="0 -0.65 0.35" euler="1.1 0 0"/>
+    </worldbody>
+
+    <actuator>
+        <position name="pusher_x_act" joint="pusher_x" kp="60"/>
+
+        <position name="pusher_y_act" joint="pusher_y" kp="60"/>
+    </actuator>
+</mujoco>
