@@ -9,7 +9,7 @@ description = "A MuJoCo + SO-ARM100 PushT imitation-learning benchmark."
 readme = "README.md"
 requires-python = ">=3.10,<3.12"
 license = { text = "MIT" }
-authors = [{ name = "MyPushT contributors" }]
+authors = [{ name = "zzz" }]
 keywords = ["robotics", "mujoco", "imitation-learning", "pusht", "so-arm100"]
 dependencies = [
   "numpy>=1.26",
@@ -23,7 +23,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "ruff>=0.5"]
 logging = ["wandb>=0.16"]
 teleop = ["pygame>=2.5"]
 
@@ -39,7 +38,6 @@ mypusht-smoke-env = "mypusht.envs.smoke:main"
 where = ["src"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.ruff]

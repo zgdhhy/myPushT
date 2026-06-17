@@ -12,11 +12,11 @@ TRAIN_MODULES = {
 }
 
 POLICY_USAGE = {
-    "bc-mlp": "mypusht-train bc-mlp --dataset outputs/phase3/lerobot_dataset/dataset_v3",
-    "bc-cnn": "mypusht-train bc-cnn --dataset outputs/phase3/lerobot_dataset/dataset_v3",
-    "act": "mypusht-train act --dataset outputs/phase3/lerobot_dataset/dataset_v3",
+    "bc-mlp": "mypusht-train bc-mlp --dataset outputs/data/lerobot_dataset",
+    "bc-cnn": "mypusht-train bc-cnn --dataset outputs/data/lerobot_dataset",
+    "act": "mypusht-train act --dataset outputs/data/lerobot_dataset",
     "diffusion-policy": (
-        "mypusht-train diffusion-policy --dataset outputs/phase3/lerobot_dataset/dataset_v3"
+        "mypusht-train diffusion-policy --dataset outputs/data/lerobot_dataset"
     ),
 }
 
