@@ -7,7 +7,7 @@ from mypusht.envs.so100_teleop_env import StepInfo
 from mypusht.teleop.config import OBS_SHAPE
 
 
-WINDOW_NAME = "phase3 preview"
+WINDOW_NAME = "teleop preview"
 _WINDOW_CREATED = False
 _CACHED_SCALE: int | None = None
 _TOP_BGR: np.ndarray | None = None

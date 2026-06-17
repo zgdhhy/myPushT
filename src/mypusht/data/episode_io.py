@@ -45,7 +45,4 @@ def save_episode(path: Path, buffer: list[dict], fps: int) -> bool:
     )
     print("saved:", path)
     print("frames:", len(buffer))
-    print("final success:", bool(arrays["success"][-1]))
-    print("final xy_error:", float(arrays["xy_error"][-1]))
-    print("final yaw_error:", float(arrays["yaw_error"][-1]))
     return True

@@ -14,10 +14,6 @@ outputs/**
 wandb/
 *.log
 
-# Local learning-stage scripts kept for reference but not part of the public v1 package
-src/scripts/**
-计划.md
-
 # Large assets managed outside Git for the public repo
 assets/lerobot_dataset/**
 assets/model/**
