@@ -12,19 +12,19 @@ license = { text = "MIT" }
 authors = [{ name = "zzz" }]
 keywords = ["robotics", "mujoco", "imitation-learning", "pusht", "so-arm100"]
 dependencies = [
-  "numpy>=1.26",
-  "gymnasium>=0.29",
-  "mujoco>=3.1",
-  "opencv-python>=4.9",
-  "imageio[ffmpeg]>=2.34",
-  "torch>=2.2",
-  "tqdm>=4.66",
-  "lerobot>=0.5",
+  "numpy>=2.2.6",
+  "gymnasium>=1.2.2",
+  "mujoco>=3.3.7",
+  "opencv-python>=4.13",
+  "imageio[ffmpeg]>=2.37",
+  "torch>=2.7.1",
+  "tqdm>=4.67.3",
+  "lerobot>=0.4.4",
 ]
 
 [project.optional-dependencies]
-logging = ["wandb>=0.16"]
-teleop = ["pygame>=2.5"]
+logging = ["wandb>=0.24.2"]
+teleop = ["pygame>=2.6.1"]
 
 [project.scripts]
 mypusht-collect = "mypusht.teleop.collect:main"
