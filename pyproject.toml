@@ -32,10 +32,16 @@ mypusht-convert = "mypusht.data.lerobot_convert:main"
 mypusht-train = "mypusht.training.cli:main"
 mypusht-eval = "mypusht.evaluation.evaluate:main"
 mypusht-aggregate = "mypusht.evaluation.aggregate:main"
-mypusht-smoke-env = "mypusht.envs.smoke:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+mypusht = [
+  "assets/envs/simplePushT/*.xml",
+  "assets/envs/so100PushT/*.xml",
+  "assets/envs/so100PushT/assets/*.stl",
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

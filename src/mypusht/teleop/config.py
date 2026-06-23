@@ -37,7 +37,11 @@ def _range_from_mapping(raw: dict, key: str, default: tuple[float, float]) -> tu
     return low, high
 
 
+
 def load_mapping(path: Path = MAPPING_PATH) -> ControllerMapping:
+    if path is None:
+        path = MAPPING_PATH
+
     with path.open("r", encoding="utf-8") as f:
         raw = json.load(f)
 

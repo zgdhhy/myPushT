@@ -87,7 +87,7 @@ def site_xy(model, data, site_name):
     return data.site_xpos[site_id][:2].copy()
 
 # 检查push任务是否成功，成功的条件是物体和目标之间的xy位置误差小于pos_tol，并且yaw误差小于yaw_tol
-def check_pusht_success(model, data, pos_tol=0.025, yaw_tol=0.20):
+def check_pusht_success(model, data, pos_tol=0.010, yaw_tol=0.10):
     object_xy = site_xy(model, data, "T_block_anchor")
     target_xy = site_xy(model, data, "T_sign_anchor")
     object_yaw = yaw_from_body(model, data, "T_block")

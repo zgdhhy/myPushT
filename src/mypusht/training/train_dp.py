@@ -133,11 +133,11 @@ def parse_args():
     parser.add_argument("--obs-horizon", type=int, default=2)
     parser.add_argument("--action-horizon", type=int, default=16)
     parser.add_argument("--max-items", type=int, default=None)
-    parser.add_argument("--cache-dir", type=Path, default=None)
+    parser.add_argument("--no-preload", action="store_true")
+    parser.add_argument("--cache-dir", type=Path, default="outputs/cache/dp")
     parser.add_argument("--rebuild-cache", action="store_true")
-    parser.add_argument("--no-cache-lowdim", action="store_true")
-    parser.add_argument("--cache-images", action="store_true")
     parser.add_argument("--image-lru-size", type=int, default=256)
+    
     parser.add_argument("--num-diffusion-steps", type=int, default=100)
     parser.add_argument("--beta-start", type=float, default=1e-4)
     parser.add_argument("--beta-end", type=float, default=2e-2)
@@ -157,8 +157,8 @@ def main():
         obs_horizon=args.obs_horizon,
         action_horizon=args.action_horizon,
         max_items=args.max_items,
-        cache_lowdim=not args.no_cache_lowdim,
-        cache_images=args.cache_images,
+        cache_lowdim=not args.no_preload,
+        cache_images=not args.no_preload,
         cache_dir=args.cache_dir,
         rebuild_cache=args.rebuild_cache,
         image_lru_size=args.image_lru_size,

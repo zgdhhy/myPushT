@@ -42,8 +42,6 @@ def main(argv: list[str] | None = None) -> None:
         print("  --batch-size N        Batch size")
         print("  --device auto|cpu|cuda")
         print("  --cache-dir PATH      Optional tensor cache directory")
-        print()
-        print("Install the project environment to see and run the full trainer arguments.")
         return
 
     module_name = TRAIN_MODULES[args.policy]

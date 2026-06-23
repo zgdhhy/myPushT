@@ -1,6 +1,8 @@
 import argparse
 from pathlib import Path
 
+import wandb
+
 import torch
 from tqdm import tqdm
 from torch.utils.data import DataLoader, random_split
@@ -53,10 +55,11 @@ def evaluate(model, loader, loss_fn, stats, device):
     return sum(losses) / max(1, len(losses))
 
 
-def train(model, steps, train_iter, valid_iter, optimizer, loss_fn, stats, log_freq, device):
+def train(model, steps, train_iter, valid_iter, optimizer, loss_fn, stats, log_freq, device, wandb_run=None):
     step = 0
     model.train()
     x_mean, x_std, action_mean, action_std = stats
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=steps)
     with tqdm(total=steps, desc="training BC-MLP", unit="step") as pbar:
         while step < steps:
             for batch in train_iter:
@@ -72,15 +75,23 @@ def train(model, steps, train_iter, valid_iter, optimizer, loss_fn, stats, log_f
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                scheduler.step()
 
                 if step % log_freq == 0:
                     val_loss = evaluate(model, valid_iter, loss_fn, stats, device)
+                    current_lr = scheduler.get_last_lr()[0]
                     pbar.set_postfix(
                         train_loss=f"{loss.item():.6f}",
                         val_loss=f"{val_loss:.6f}",
+                        lr=f"{current_lr:.2e}",
                     )
                     tqdm.write(f"step={step:05d} train_loss={loss.item():.6f} val_loss={val_loss:.6f}")
-
+                    if wandb_run is not None:
+                        wandb_run.log({
+                            "train_loss": loss.item(),
+                            "val_loss": val_loss,
+                            "lr": current_lr,
+                        }, step=step)
                 step += 1
                 pbar.update(1)
                 if step >= steps:
@@ -89,14 +100,19 @@ def train(model, steps, train_iter, valid_iter, optimizer, loss_fn, stats, log_f
 def parse_args():
     parser = argparse.ArgumentParser()
     # 训练参数
-    parser.add_argument("--steps", type=int, default=3000)
+    parser.add_argument("--steps", type=int, default=8000)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=1e-3)
+    parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--device", type=str, default="auto")
     parser.add_argument("--out", type=str, default="outputs/models/bc_mlp.pt")
     parser.add_argument("--seed", type=int, default=49)
-    parser.add_argument("--log-freq", type=int, default=100)
+    parser.add_argument("--log-freq", type=int, default=200)
     
+    parser.add_argument("--wandb", action="store_true")
+    parser.add_argument("--wandb-project", type=str, default="mypusht")
+    parser.add_argument("--wandb-name", type=str, default="cnn_train")
+    parser.add_argument("--wandb-mode", type=str, default="online", choices=["online", "offline", "disabled"])
     # 数据集参数
     parser.add_argument("--dataset", type=str, required=True)
     parser.add_argument("--max-items", type=int, default=None)
@@ -156,9 +172,30 @@ def main():
     x_mean, x_std, action_mean, action_std = stats
 
     model = BCMLP(input_dim=input_dim, action_dim=action_dim).to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     loss_fn = torch.nn.MSELoss()
 
+    wandb_run = None
+    if args.wandb:
+        wandb_run = wandb.init(
+            project=args.wandb_project,
+            name=args.wandb_name,
+            mode=args.wandb_mode,
+            config={
+                "steps": args.steps,
+                "batch_size": args.batch_size,
+                "lr": args.lr,
+                "weight_decay": args.weight_decay,
+                "seed": args.seed,
+                "dataset": str(args.dataset),
+                "train_sequences": train_size,
+                "val_sequences": val_size,
+                "input_dim": input_dim,
+                "action_dim": action_dim,
+                "model_parameters": sum(p.numel() for p in model.parameters()),
+            },
+        )
+    
     print("start training BC-MLP")
     print("model parameters:", sum(p.numel() for p in model.parameters()))
     print(f"train frames={train_size} val frames={val_size} input_dim={input_dim} action_dim={action_dim}")
@@ -173,6 +210,7 @@ def main():
         stats=stats,
         log_freq=args.log_freq,
         device=device,
+        wandb_run=wandb_run
     )
     
     
@@ -192,6 +230,9 @@ def main():
         outPath,
     )
     print("saved:", outPath)
+    if wandb_run is not None:
+        wandb_run.summary["checkpoint"] = str(outPath)
+        wandb_run.finish()
 
 
 if __name__ == "__main__":

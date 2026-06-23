@@ -8,24 +8,23 @@ from .utils import image_to_chw_float, lowdim_from_sample
 
 
 class ImageEncoder(nn.Module):
+
     def __init__(self, out_dim: int = 64, dropout: float = 0.1):
         super().__init__()
         self.net = nn.Sequential(
             nn.Conv2d(3, 32, kernel_size=5, stride=2, padding=2),
-            nn.BatchNorm2d(32),
             nn.ReLU(inplace=True),
-            nn.Dropout2d(dropout),
+            nn.Dropout(dropout),
             nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1),
-            nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
-            nn.Dropout2d(dropout),
-            nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1),
-            nn.BatchNorm2d(128),
+            nn.Dropout(dropout),
+            nn.Conv2d(64, 64, kernel_size=3, stride=2, padding=1),
             nn.ReLU(inplace=True),
-            nn.Dropout2d(dropout),
+            nn.Dropout(dropout),
             nn.AdaptiveAvgPool2d((1, 1)),
             nn.Flatten(),
-            nn.Linear(128, out_dim),
+            nn.Linear(64, out_dim),
+            nn.ReLU(inplace=True),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

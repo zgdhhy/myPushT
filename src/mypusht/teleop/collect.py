@@ -1,9 +1,11 @@
 import argparse
 import time
+from pathlib import Path
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--config_path", type=Path, default=None)
     parser.add_argument("--max_seconds", type=float, default=60.0)
     parser.add_argument("--preview_scale", type=int, default=2)
     return parser.parse_args()
