@@ -40,7 +40,7 @@ MyEmbodied/
 ├── src/
 │   └── mypusht/
 |       ├── assets/
-│           └── envs/                      # MuJoCo XML、STL 模型资源
+│           └── envs/               # MuJoCo XML、STL 模型资源
 │       ├── data/                   # raw episode 保存、LeRobot 转换、序列数据集
 │       ├── envs/                   # SimplePushT 与 SO100 PushT 环境
 │       ├── evaluation/             # 策略适配器、统一评估、结果聚合
