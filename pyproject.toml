@@ -17,9 +17,10 @@ dependencies = [
   "mujoco>=3.3.7",
   "opencv-python>=4.13",
   "imageio[ffmpeg]>=2.37",
-  "torch>=2.7.1",
   "tqdm>=4.67.3",
   "lerobot>=0.4.4",
+  "torch==2.10.0",
+  "torchvision==0.25.0",
 ]
 
 [project.optional-dependencies]
