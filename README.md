@@ -302,7 +302,7 @@ mypusht-aggregate --out outputs/eval/tables/policy_comparison.csv
 
 ### BC-MLP
 
-<video src="docs/videos/bc_mlp.mp4" controls muted width="100%"></video>
+<video src="https://ocs.celine.cn/livechat/uploadfile/celine/20260625/4A6D5D5D0A8162BAC5C995F9F7BCCC8C.mp4" controls muted width="100%"></video>
 
 ### BC-CNN
 
