@@ -106,14 +106,14 @@ POLICY_SPECS = {
         family="traditional",
         action_mode="single_step",
         requires_language=False,
-        ckpt=MODEL_DIR / "bc_mlp_v3.pt",
+        ckpt=MODEL_DIR / "bc_mlp.pt",
     ),
     "bc_cnn": PolicyMeta(
         display_name="BC-CNN",
         family="traditional",
         action_mode="single_step",
         requires_language=False,
-        ckpt=MODEL_DIR / "bc_cnn_v3.pt",
+        ckpt=MODEL_DIR / "bc_cnn.pt",
     ),
 
     # 序列策略 ACT diffusion_policy
@@ -122,14 +122,14 @@ POLICY_SPECS = {
         family="sequence_policy",
         action_mode="action_chunk",
         requires_language=False,
-        ckpt=MODEL_DIR / "act_v3.pt",
+        ckpt=MODEL_DIR / "act.pt",
     ),
     "diffusion_policy": PolicyMeta(
         display_name="Diffusion Policy",
         family="sequence_policy",
         action_mode="action_chunk",
         requires_language=False,
-        ckpt=MODEL_DIR / "dp_v3.pt",
+        ckpt=MODEL_DIR / "diffusion_policy.pt",
     ),
 
     # 语言条件策略 VLA

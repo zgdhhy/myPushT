@@ -50,7 +50,7 @@ def action_smoothness(actions):
 
 
 # 关于显示和评估指标
-def make_display_frame(obs, episode_idx, seed, step, max_steps, reward, info, action):
+def make_display_frame(policy_name, obs, episode_idx, seed, step, max_steps, reward, info, action):
     import cv2
 
     top = cv2.cvtColor(obs["images"]["cam_top"], cv2.COLOR_RGB2BGR)
@@ -65,7 +65,6 @@ def make_display_frame(obs, episode_idx, seed, step, max_steps, reward, info, ac
     cv2.rectangle(overlay, (0, 0), (frame.shape[1], 92), (0, 0, 0), -1)
     cv2.addWeighted(overlay, 0.58, frame, 0.42, 0, dst=frame)
 
-    success_flag = int(bool(info.get("success", False)))
     xy_error = float(info.get("xy_error", np.nan))
     yaw_error = float(info.get("yaw_error", np.nan))
     ax = float(action[0]) if len(action) > 0 else np.nan
@@ -74,7 +73,7 @@ def make_display_frame(obs, episode_idx, seed, step, max_steps, reward, info, ac
     my = float(mocap_xy[1]) if len(mocap_xy) > 1 else np.nan
 
     lines = [
-        f"episode={episode_idx} seed={seed} step={step + 1}/{max_steps} success={success_flag}",
+        f"policy={policy_name} episode={episode_idx} seed={seed} step={step + 1}/{max_steps}",
         f"return={reward:.3f} xy_error={xy_error:.4f} yaw_error={yaw_error:.3f}",
         f"mocap=({mx:.4f}, {my:.4f}) action=({ax:.4f}, {ay:.4f})",
     ]
@@ -119,6 +118,7 @@ def run_episode(env, policy, seed, max_steps, video_path=None,
 
             if writer is not None or display:
                 frame = make_display_frame(
+                    policy_name = policy.meta.display_name,
                     obs=obs, episode_idx=episode_idx, seed=seed,
                     step=step, max_steps=max_steps, reward=reward,
                     info=info, action=action,

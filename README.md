@@ -1,5 +1,7 @@
 # MyPushT
 
+![MyPushT](docs/env_image/so100_env.png)
+
 MyPushT 是一个基于 MuJoCo 和 SO-ARM100 的 PushT 模仿学习 benchmark。项目目标不是只训练一个策略，而是把具身智能任务整理成一条可复现的工程闭环：环境仿真、手柄遥操作采集、LeRobot 数据转换、策略训练、统一评估和结果汇总。
 
 当前版本聚焦 4 类策略：BC-MLP、BC-CNN、ACT 和 Diffusion Policy。
@@ -14,6 +16,7 @@ MyPushT 是一个基于 MuJoCo 和 SO-ARM100 的 PushT 模仿学习 benchmark。
 - [策略说明](#策略说明)
 - [策略训练](#策略训练)
 - [统一评估](#统一评估)
+- [策略效果视频](#策略效果视频)
 - [动作与数据约定](#动作与数据约定)
 - [常用命令入口](#常用命令入口)
 - [故障排查](#故障排查)
@@ -34,7 +37,9 @@ MyEmbodied/
 ├── configs/
 │   └── controller_mapping.json     # 手柄遥操作映射
 ├── docs/
-│   ├── model_diagrams/             # 预留：四类策略模型说明图
+│   ├── env_image/                  # so100环境图片
+│   ├── model_diagrams/             # 四类策略模型说明图
+│   ├── videos/                     # 四类策略评估视频
 │   └── results/
 │       └── policy_comparison.csv   # 当前策略评估
 ├── src/
@@ -262,6 +267,8 @@ mypusht-eval --policy diffusion_policy --ckpt outputs/models/diffusion_policy.pt
 mypusht-eval --policy bc_mlp --split normal --episodes 3 --save-video
 ```
 
+运行 `mypusht-eval --save-video` 后，可将生成的 `outputs/eval/res_*/videos/*.mp4` 复制或整理到 `docs/videos/`，再更新上方“策略效果视频”中 `<video>` 标签的 `src`。
+
 评估输出会写入：
 
 ```text
@@ -290,6 +297,24 @@ mypusht-aggregate --out outputs/eval/tables/policy_comparison.csv
 | `mean_final_yaw_error`   | 最终 yaw 角误差           |
 | `mean_action_smoothness` | action 相邻差分的平均幅度 |
 | `mean_inference_ms`      | 策略平均推理耗时          |
+
+## 策略效果视频
+
+### BC-MLP
+
+<video src="docs/videos/bc_mlp.mp4" controls muted width="100%"></video>
+
+### BC-CNN
+
+<video src="docs/videos/bc_cnn.mp4" controls muted width="100%"></video>
+
+### ACT
+
+<video src="docs/videos/act.mp4" controls muted width="100%"></video>
+
+### Diffusion Policy
+
+<video src="docs/videos/diffusion_policy.mp4" controls muted width="100%"></video>
 
 ## 动作与数据约定
 
