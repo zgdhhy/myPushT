@@ -302,19 +302,19 @@ mypusht-aggregate --out outputs/eval/tables/policy_comparison.csv
 
 ### BC-MLP
 
-<video src="https://ocs.celine.cn/livechat/uploadfile/celine/20260625/4A6D5D5D0A8162BAC5C995F9F7BCCC8C.mp4" controls muted width="100%"></video>
+https://github.com/user-attachments/assets/013cb37f-78f5-4f4e-ac65-d8e9d71162fe
 
 ### BC-CNN
 
-<video src="docs/videos/bc_cnn.mp4" controls muted width="100%"></video>
+https://github.com/user-attachments/assets/b2d087d0-bde9-4e9f-8e2f-b5fff251d6c1
 
 ### ACT
 
-<video src="docs/videos/act.mp4" controls muted width="100%"></video>
+https://github.com/user-attachments/assets/73ae0db0-590f-4709-a051-4addd93d5b95
 
 ### Diffusion Policy
 
-<video src="docs/videos/diffusion_policy.mp4" controls muted width="100%"></video>
+https://github.com/user-attachments/assets/9894e67e-319d-4524-94f3-ab914dc48b7f
 
 ## 动作与数据约定
 
