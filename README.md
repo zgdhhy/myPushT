@@ -397,16 +397,6 @@ python -c "import torch; print(torch.__version__); print(torch.cuda.is_available
 
 没有 GPU 时使用 `--device cpu` 或默认 `--device auto`。
 
-### 训练很慢
-
-LeRobot 视频解码可能成为瓶颈。优先尝试：
-
-```bash
-mypusht-train bc-mlp --dataset outputs/data/lerobot_dataset --cache-dir outputs/cache/bc_mlp
-mypusht-train act --dataset outputs/data/lerobot_dataset --cache-dir outputs/cache/act --cache-images
-```
-
-`--cache-images` 会明显增加磁盘占用，适合数据集较小或磁盘空间充足时使用。
 
 ## License
 
