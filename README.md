@@ -267,8 +267,6 @@ mypusht-eval --policy diffusion_policy --ckpt outputs/models/diffusion_policy.pt
 mypusht-eval --policy bc_mlp --split normal --episodes 3 --save-video
 ```
 
-运行 `mypusht-eval --save-video` 后，可将生成的 `outputs/eval/res_*/videos/*.mp4` 复制或整理到 `docs/videos/`，再更新上方“策略效果视频”中 `<video>` 标签的 `src`。
-
 评估输出会写入：
 
 ```text
